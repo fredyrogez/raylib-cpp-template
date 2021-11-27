@@ -1,0 +1,88 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "task-build-debug",
+            "command": "g++",
+            "args": [
+                "-g",
+                "-std=c++17",
+                "-m64",
+                "-O0",
+                "-Wall",
+                "${workspaceFolder}/src/*.cpp",
+                "-o",
+                "${workspaceFolder}/dist/game.exe",
+                "-I./src",
+                "-I./src/include",
+                "-I${env:raylib64}/src",
+                "-I${env:raylib64}/src/extras",
+                "-static-libgcc",
+                "-static-libstdc++",
+                "-L${env:raylib64}/bin/debug",
+                "-lraylib",
+                "-lopengl32",
+                "-lgdi32",
+                "-lwinmm"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "type": "shell",
+            "group": "build",
+            "problemMatcher": [],
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "task-clean"
+            ]
+        },
+        {
+            "label": "task-build-release",
+            "command": "g++",
+            "args": [
+                "-std=c++17",
+                "-m64",
+                "-O3",
+                "-mwindows",
+                "${workspaceFolder}/src/*.cpp",
+                "${workspaceFolder}/src/my.o",
+                "-o",
+                "${workspaceFolder}/dist/game.exe",
+                "-I./src",
+                "-I./src/include",
+                "-I${env:raylib64}/src",
+                "-I${env:raylib64}/src/extras",
+                "-static-libgcc",
+                "-static-libstdc++",
+                "-L${env:raylib64}/bin/release",
+                "-lraylib",
+                "-lopengl32",
+                "-lgdi32",
+                "-lwinmm"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "type": "shell",
+            "group": "build",
+            "problemMatcher": [],
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "task-clean",
+                "task-my-rc-build"         
+            ]
+        },
+        {
+            "label": "task-my-rc-build",
+            "command": "windres ${workspaceFolder}/src/my.rc ${workspaceFolder}/src/my.o",
+            "type": "shell",
+            "group": "build"
+        },
+        {
+            "label": "task-clean",
+            "command": "del ${workspaceFolder}/dist/*.exe ; del ${workspaceFolder}/src/*.o",
+            "type": "shell",
+            "group": "build"
+        }
+    ]
+}
