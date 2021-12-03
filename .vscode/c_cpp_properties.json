@@ -4,7 +4,6 @@
             "name": "Win32",
             "includePath": [
                 "${env:mingw64}/../x86_64-w64-mingw32/include/**",
-                "${env:raylib64}/src/**",
                 "${workspaceFolder}/**"
             ],
             "defines": [
